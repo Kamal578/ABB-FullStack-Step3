@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ABB</title>
+  </head>
+  <body>
+    <button onclick="handleOnClick()">Click On Me!</button>
+    <script>
+      function createNewUser() {
+        const name = prompt("Enter your name:"),
+          surname = prompt("Enter your surname:"),
+          date = prompt("Enter your birthday date:");
+
+        const newUser = {
+          name: name,
+          surname: surname,
+          date: date,
+          getLogin: function () {
+            return (this.name[0] + this.surname).toLowerCase();
+          },
+          getAge: function () {
+            const today = new Date();
+            const dateOfBirth = new Date(
+              this.date.split(".").reverse().join("-")
+            );
+            let age = today.getFullYear() - dateOfBirth.getFullYear();
+            const diffrenceMonth = today.getMonth() - dateOfBirth.getMonth();
+            if (
+              diffrenceMonth < 0 ||
+              (diffrenceMonth === 0 && today.getDate() < dateOfBirth.getDate())
+            ) {
+              age--;
+            }
+            return age;
+          },
+          getPassword: function () {
+            return (
+              this.getLogin()[0].toUpperCase() +
+              this.surname.toLowerCase() +
+              this.date.split(".").pop()
+            );
+          },
+        };
+        return newUser;
+      }
+
+      function handleOnClick() {
+        let user = createNewUser();
+        console.log(user);
+        console.log("Age: " + user.getAge());
+        console.log("Password: " + user.getPassword());
+        console.log("Login: " + user.getLogin());
+        document.write("Check console for results");
+      }
+    </script>
+  </body>
+</html>
